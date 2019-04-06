@@ -1,13 +1,11 @@
 
 package com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.models.outputs;
 
-import java.io.Serializable;
 import android.os.Parcel;
-import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Repo implements Serializable, Parcelable
+public class Repo extends RepoItemBase
 {
 
     @SerializedName("id")

@@ -15,15 +15,11 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by oguz on 14.6.2017.
- */
-
-public class RetrofitClient {
+public class RetroClient {
 
     private static Retrofit retrofit = null;
 
-    private RetrofitClient() {
+    private RetroClient() {
     }
 
 

@@ -7,7 +7,7 @@
     tools:context=".activities.RepoListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAnimals"
+        android:id="@+id/recyclerViewForRepo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
