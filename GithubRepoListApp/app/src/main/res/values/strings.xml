@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">GithubRepoList</string>
     <string name="home_page">Home</string>
+    <string name="submit">Submit</string>
+    <string name="username">Username</string>
+    <string name="my_github_username">oguzhangedik</string>
+    <string name="network_connection_error">Check your network connection</string>
+    <string name="empty_search_warning">Please enter a github username</string>
+    <string name="available_char_set">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="repo_not_found">Repo Not Found</string>
+    <string name="server_broken">Server Broken</string>
 </resources>

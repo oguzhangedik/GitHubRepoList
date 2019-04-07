@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.RepoListActivity"
-            android:label="@string/home_page" >
+        <activity android:name=".activities.RepoListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

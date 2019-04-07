@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:paddingTop="10dp">
 
-    <TextView
-        android:id="@+id/tvAnimalName"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:text="HEADER"/>
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/repoSearchingButton"
+        android:digits="@string/available_char_set"
+        android:hint="@string/username"
+        android:inputType="textFilter"
+        android:maxLength="100"
+        android:text="@string/my_github_username" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/repoSearchingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="@string/submit" />
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="repo_item_top_margin">10dp</dimen>
+    <dimen name="repo_item_bottom_margin">10dp</dimen>
+    <dimen name="repo_item_name_text_size">20sp</dimen>
+    <dimen name="no_repo_item_text_size">30sp</dimen>
+</resources>
