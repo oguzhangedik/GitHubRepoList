@@ -227,6 +227,9 @@ public class Repo extends RepoItemBase
     @SerializedName("default_branch")
     @Expose
     private String defaultBranch;
+
+    private boolean isFavorite = false;
+
     public final static Creator<Repo> CREATOR = new Creator<Repo>() {
 
 
@@ -319,6 +322,8 @@ public class Repo extends RepoItemBase
         this.openIssues = ((int) in.readValue((int.class.getClassLoader())));
         this.watchers = ((int) in.readValue((int.class.getClassLoader())));
         this.defaultBranch = ((String) in.readValue((String.class.getClassLoader())));
+        this.isFavorite = ((boolean) in.readValue((boolean.class.getClassLoader())));
+
     }
 
     public Repo() {
@@ -908,6 +913,15 @@ public class Repo extends RepoItemBase
         this.defaultBranch = defaultBranch;
     }
 
+    public boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+         this.isFavorite = isFavorite;
+    }
+
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(nodeId);
@@ -982,6 +996,7 @@ public class Repo extends RepoItemBase
         dest.writeValue(openIssues);
         dest.writeValue(watchers);
         dest.writeValue(defaultBranch);
+        dest.writeValue(isFavorite);
     }
 
     public int describeContents() {

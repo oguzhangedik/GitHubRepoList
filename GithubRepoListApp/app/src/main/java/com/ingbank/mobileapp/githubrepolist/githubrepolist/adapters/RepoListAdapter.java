@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.R;
@@ -65,7 +66,10 @@ public class RepoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if (holder instanceof RepoItemViewHolder) {
             Repo repo = (Repo) repoList.get(position);
             RepoItemViewHolder repoItemViewHolder = (RepoItemViewHolder) holder;
-            repoItemViewHolder.repoNameTextView.setText(repo.getName());
+            repoItemViewHolder.getRepoNameTextView().setText(repo.getName());
+            repoItemViewHolder.getFavoriteRepoImageView().setVisibility(repo.getIsFavorite()
+                    ? View.VISIBLE
+                    : View.GONE);
         }
 
     }
@@ -126,16 +130,34 @@ public class RepoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class RepoItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView repoNameTextView;
+        private ImageView favoriteRepoImageView;
 
         RepoItemViewHolder(View itemView) {
             super(itemView);
             repoNameTextView = itemView.findViewById(R.id.repoNameTextView);
+            favoriteRepoImageView = itemView.findViewById(R.id.favoriteRepoImageView);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        public ImageView getFavoriteRepoImageView() {
+            return favoriteRepoImageView;
+        }
+
+        public void setFavoriteRepoImageView(ImageView favoriteRepoImageView) {
+            this.favoriteRepoImageView = favoriteRepoImageView;
+        }
+
+        public TextView getRepoNameTextView() {
+            return repoNameTextView;
+        }
+
+        public void setRepoNameTextView(TextView repoNameTextView) {
+            this.repoNameTextView = repoNameTextView;
         }
     }
 
@@ -168,5 +190,4 @@ public class RepoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public interface RepoSearchingInstructionListener {
         void onSubmitButtonClicked(String searchText);
     }
-
 }
