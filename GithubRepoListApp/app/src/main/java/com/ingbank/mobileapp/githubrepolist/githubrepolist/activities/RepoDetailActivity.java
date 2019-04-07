@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.R;
@@ -22,12 +24,27 @@ import com.squareup.picasso.Picasso;
 
 public class RepoDetailActivity extends AppCompatActivity {
 
+    @BindView(R.id.ownerImageView)
+    ImageView ownerImageView;
+
+    @BindView(R.id.ownerNameTextView)
+    TextView ownerNameTextView;
+
+    @BindView(R.id.starCountTextView)
+    TextView starCountTextView;
+
+    @BindView(R.id.openIssuesTextView)
+    TextView openIssuesTextView;
+
+
     private Repo currentRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repo_detail);
+        ButterKnife.bind(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,11 +56,6 @@ public class RepoDetailActivity extends AppCompatActivity {
         currentRepo = (Repo) getIntent().getSerializableExtra(AppConstants.SELECTED_REPO);
         if (currentRepo != null) {
             setTitle(currentRepo.getName());
-
-            ImageView ownerImageView = findViewById(R.id.ownerImageView);
-            TextView ownerNameTextView = findViewById(R.id.ownerNameTextView);
-            TextView starCountTextView = findViewById(R.id.starCountTextView);
-            TextView openIssuesTextView = findViewById(R.id.openIssuesTextView);
 
             Picasso.with(this)
                     .load(currentRepo.getOwner().getAvatarUrl())

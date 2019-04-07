@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.jakewharton.butterknife'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -21,6 +23,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -40,4 +47,7 @@ dependencies {
     implementation 'com.squareup.okhttp:okhttp:2.7.2'
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
 }

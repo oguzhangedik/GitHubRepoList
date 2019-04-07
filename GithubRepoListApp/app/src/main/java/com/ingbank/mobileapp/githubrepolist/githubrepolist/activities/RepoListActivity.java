@@ -27,6 +27,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,17 +37,21 @@ import static com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.AppConst
 
 public class RepoListActivity extends AppCompatActivity implements RepoListAdapter.ItemClickListener, RepoListAdapter.RepoSearchingInstructionListener {
 
+    @BindView(R.id.repoLoadingProgressBar)
+    ProgressBar repoLoadingProgressBar;
+
+    @BindView(R.id.recyclerViewForRepo)
+    RecyclerView recyclerViewForRepo;
+
     private RepoListAdapter repoListAdapter;
-    private ProgressBar repoLoadingProgressBar;
     private List<RepoItemBase> repoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repo_list);
+        ButterKnife.bind(this);
         setTitle(R.string.home_page);
-        repoLoadingProgressBar = findViewById(R.id.repoLoadingProgressBar);
-        RecyclerView recyclerViewForRepo = findViewById(R.id.recyclerViewForRepo);
         recyclerViewForRepo.setLayoutManager(new LinearLayoutManager(this));
 
         repoList = new ArrayList<>();
