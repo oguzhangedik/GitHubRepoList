@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import com.ingbank.mobileapp.githubrepolist.githubrepolist.R;
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.models.outputs.Repo;
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.AppConstants;
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.FavoriteReposUtil;
+import com.squareup.picasso.Picasso;
 
 public class RepoDetailActivity extends AppCompatActivity {
 
@@ -36,6 +39,22 @@ public class RepoDetailActivity extends AppCompatActivity {
         currentRepo = (Repo) getIntent().getSerializableExtra(AppConstants.SELECTED_REPO);
         if (currentRepo != null) {
             setTitle(currentRepo.getName());
+
+            ImageView ownerImageView = findViewById(R.id.ownerImageView);
+            TextView ownerNameTextView = findViewById(R.id.ownerNameTextView);
+            TextView starCountTextView = findViewById(R.id.starCountTextView);
+            TextView openIssuesTextView = findViewById(R.id.openIssuesTextView);
+
+            Picasso.with(this)
+                    .load(currentRepo.getOwner().getAvatarUrl())
+                    .error(R.drawable.profile_image_error_icon)
+                    .placeholder(R.drawable.progress_icon)
+                    .into(ownerImageView);
+
+            ownerNameTextView.setText(currentRepo.getOwner().getLogin());
+            starCountTextView.setText(getString(R.string.star_count_label) + " " + currentRepo.getStargazersCount());
+            openIssuesTextView.setText(getString(R.string.open_issues_label) + " " + currentRepo.getOpenIssuesCount());
+
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.no_access_to_selected_repo_warning), Toast.LENGTH_LONG).show();
             finish();

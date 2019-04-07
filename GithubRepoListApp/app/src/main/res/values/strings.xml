@@ -14,4 +14,6 @@
     <string name="remove_from_favorites">Removed from Favorites</string>
     <string name="added_to_favorite_list">Added to Favorite List</string>
     <string name="no_access_to_selected_repo_warning">We could not access to  selected repository</string>
+    <string name="star_count_label">Star Count:</string>
+    <string name="open_issues_label">Open Issues:</string>
 </resources>
