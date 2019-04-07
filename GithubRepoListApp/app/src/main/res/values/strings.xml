@@ -11,4 +11,7 @@
     <string name="repo_not_found">Repo Not Found</string>
     <string name="server_broken">Server Broken</string>
     <string name="title_activity_repo_detail">RepoDetailActivity</string>
+    <string name="remove_from_favorites">Removed from Favorites</string>
+    <string name="added_to_favorite_list">Added to Favorite List</string>
+    <string name="no_access_to_selected_repo_warning">We could not access to  selected repository</string>
 </resources>

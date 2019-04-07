@@ -1,6 +1,8 @@
 package com.ingbank.mobileapp.githubrepolist.githubrepolist.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.models.out
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.models.outputs.Repo;
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.models.outputs.RepoHeader;
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.models.outputs.RepoItemBase;
+import com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.AppConstants;
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.FavoriteReposUtil;
 import com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.InternetConnectionUtil;
 
@@ -119,14 +122,16 @@ public class RepoListActivity extends AppCompatActivity implements RepoListAdapt
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(this, "You clicked " + ((Repo) repoList.get(position)).getName() + " on row number " + position, Toast.LENGTH_SHORT).show();
-        RepoItemBase selectedBaseRepo = repoList.get(position);
+       RepoItemBase selectedBaseRepo = repoList.get(position);
 
         if (!(selectedBaseRepo instanceof Repo)) {
             return;
         }
-
         Repo selectedRepo = (Repo) selectedBaseRepo;
-        FavoriteReposUtil.addOrUpdate(this, selectedRepo);
+
+        Intent myIntent = new Intent(this, RepoDetailActivity.class);
+        myIntent.putExtra(AppConstants.SELECTED_REPO, (Parcelable) selectedRepo);
+        startActivity(myIntent);
     }
 
     @Override

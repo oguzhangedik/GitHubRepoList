@@ -75,4 +75,23 @@ public class FavoriteReposUtil {
 
         saveFavorites(context, favoriteFavoriteRepos);
     }
+
+    public static void remove(Context context, Repo selectedRepo) {
+        FavoriteRepos favoriteFavoriteRepos = getFavorites(context);
+        List<Repo> favoriteRepoList = favoriteFavoriteRepos.getRepos();
+
+        Repo repoToRemove = null;
+
+        for (Repo repo : favoriteRepoList) {
+            if (repo.getId() == selectedRepo.getId()) {
+                repoToRemove = repo;
+                break;
+            }
+        }
+
+        if (null != repoToRemove) {
+            favoriteRepoList.remove(repoToRemove);
+            saveFavorites(context, favoriteFavoriteRepos);
+        }
+    }
 }
