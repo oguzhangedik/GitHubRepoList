@@ -36,7 +36,6 @@ public class RepoDetailActivity extends AppCompatActivity {
     @BindView(R.id.openIssuesTextView)
     TextView openIssuesTextView;
 
-
     private Repo currentRepo;
 
     @Override
@@ -105,17 +104,14 @@ public class RepoDetailActivity extends AppCompatActivity {
                     : getString(R.string.remove_from_favorites), Toast.LENGTH_SHORT).show();
 
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
         Intent returnIntent = new Intent();
-
         returnIntent.putExtra(AppConstants.SELECTED_REPO, (Parcelable) currentRepo);
         setResult(Activity.RESULT_OK, returnIntent);
-
         finish();
     }
 }

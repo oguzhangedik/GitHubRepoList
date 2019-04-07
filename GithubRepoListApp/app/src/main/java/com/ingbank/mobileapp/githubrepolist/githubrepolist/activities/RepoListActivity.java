@@ -33,6 +33,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.HttpConstants.INTERNAL_SERVER_ERROR;
+import static com.ingbank.mobileapp.githubrepolist.githubrepolist.httpclient.HttpConstants.NOT_FOUND;
 import static com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.AppConstants.SELECTED_REPO_REQUEST_CODE;
 
 public class RepoListActivity extends AppCompatActivity implements RepoListAdapter.ItemClickListener, RepoListAdapter.RepoSearchingInstructionListener {
@@ -83,10 +85,10 @@ public class RepoListActivity extends AppCompatActivity implements RepoListAdapt
                 } else {
                     String errorMessage;
                     switch (response.code()) {
-                        case 404:
+                        case NOT_FOUND:
                             errorMessage = getString(R.string.repo_not_found);
                             break;
-                        case 500:
+                        case INTERNAL_SERVER_ERROR:
                             errorMessage = getString(R.string.server_broken);
                             break;
                         default:
@@ -127,7 +129,6 @@ public class RepoListActivity extends AppCompatActivity implements RepoListAdapt
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + ((Repo) repoList.get(position)).getName() + " on row number " + position, Toast.LENGTH_SHORT).show();
         RepoItemBase selectedBaseRepo = repoList.get(position);
 
         if (!(selectedBaseRepo instanceof Repo)) {
