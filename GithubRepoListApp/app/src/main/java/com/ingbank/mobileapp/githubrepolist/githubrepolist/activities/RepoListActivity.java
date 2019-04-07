@@ -1,5 +1,6 @@
 package com.ingbank.mobileapp.githubrepolist.githubrepolist.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -22,12 +23,15 @@ import com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.InternetConnect
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.ingbank.mobileapp.githubrepolist.githubrepolist.utils.AppConstants.SELECTED_REPO_REQUEST_CODE;
 
 public class RepoListActivity extends AppCompatActivity implements RepoListAdapter.ItemClickListener, RepoListAdapter.RepoSearchingInstructionListener {
 
@@ -69,7 +73,7 @@ public class RepoListActivity extends AppCompatActivity implements RepoListAdapt
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
                 repoLoadingProgressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    updateRepoList(response);
+                    updateRepoList(response.body());
                 } else {
                     String errorMessage;
                     switch (response.code()) {
@@ -92,13 +96,9 @@ public class RepoListActivity extends AppCompatActivity implements RepoListAdapt
 
             }
 
-            private void updateRepoList(Response<List<Repo>> response) {
-                Toast.makeText(RepoListActivity.this, "Good! " + response.toString(), Toast.LENGTH_SHORT).show();
-
-                if (response.body() != null) {
-                    clearRepoListDataSet();
-                    repoList.addAll(FavoriteReposUtil.mapFavorites(RepoListActivity.this, response.body()));
-                }
+            private void updateRepoList(List<Repo> repoListToUpdate) {
+                clearRepoListDataSet();
+                repoList.addAll(FavoriteReposUtil.mapFavorites(RepoListActivity.this, repoListToUpdate));
                 repoListAdapter.notifyDataSetChanged();
             }
 
@@ -122,7 +122,7 @@ public class RepoListActivity extends AppCompatActivity implements RepoListAdapt
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(this, "You clicked " + ((Repo) repoList.get(position)).getName() + " on row number " + position, Toast.LENGTH_SHORT).show();
-       RepoItemBase selectedBaseRepo = repoList.get(position);
+        RepoItemBase selectedBaseRepo = repoList.get(position);
 
         if (!(selectedBaseRepo instanceof Repo)) {
             return;
@@ -131,11 +131,34 @@ public class RepoListActivity extends AppCompatActivity implements RepoListAdapt
 
         Intent myIntent = new Intent(this, RepoDetailActivity.class);
         myIntent.putExtra(AppConstants.SELECTED_REPO, (Parcelable) selectedRepo);
-        startActivity(myIntent);
+        RepoListActivity.this.startActivityForResult(myIntent, SELECTED_REPO_REQUEST_CODE);
     }
 
     @Override
     public void onSubmitButtonClicked(String searchText) {
         fetchRepoList(searchText);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (AppConstants.SELECTED_REPO_REQUEST_CODE == requestCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                Repo incomingRepo = data.getParcelableExtra(AppConstants.SELECTED_REPO);
+
+                for (int index = 0; index < repoList.size(); ++index) {
+                    RepoItemBase baseRepo = repoList.get(index);
+                    if (baseRepo instanceof Repo) {
+                        Repo repo = (Repo) baseRepo;
+                        if (incomingRepo.getId() == repo.getId()) {
+                            repo.setIsFavorite(incomingRepo.getIsFavorite());
+                            repoListAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+

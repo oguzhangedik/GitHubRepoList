@@ -1,6 +1,9 @@
 package com.ingbank.mobileapp.githubrepolist.githubrepolist.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -57,21 +60,31 @@ public class RepoDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_favorite) {
+            currentRepo.setIsFavorite(!currentRepo.getIsFavorite());
             if (currentRepo.getIsFavorite()) {
-                item.setIcon(R.mipmap.plus_star_icon);
-                FavoriteReposUtil.remove(this, currentRepo);
-            } else {
                 item.setIcon(R.mipmap.ticked_star_icon);
                 FavoriteReposUtil.addOrUpdate(this, currentRepo);
+            } else {
+                item.setIcon(R.mipmap.plus_star_icon);
+                FavoriteReposUtil.remove(this, currentRepo);
             }
 
             Toast.makeText(this, currentRepo.getIsFavorite()
-                    ? getString(R.string.remove_from_favorites)
-                    : getString(R.string.added_to_favorite_list), Toast.LENGTH_SHORT).show();
+                    ? getString(R.string.added_to_favorite_list)
+                    : getString(R.string.remove_from_favorites), Toast.LENGTH_SHORT).show();
 
-            currentRepo.setIsFavorite(!currentRepo.getIsFavorite());
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+
+        returnIntent.putExtra(AppConstants.SELECTED_REPO, (Parcelable) currentRepo);
+        setResult(Activity.RESULT_OK, returnIntent);
+
+        finish();
     }
 }

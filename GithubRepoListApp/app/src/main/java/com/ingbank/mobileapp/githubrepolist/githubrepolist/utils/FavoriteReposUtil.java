@@ -70,7 +70,6 @@ public class FavoriteReposUtil {
             favoriteRepoList.remove(existFavoriteRepo);
         }
 
-        selectedRepo.setIsFavorite(true);
         favoriteRepoList.add(selectedRepo);
 
         saveFavorites(context, favoriteFavoriteRepos);
